@@ -1,0 +1,8 @@
+gevent
+flask
+Flask-Sockets
+Flask-Session
+scrypt
+#sqlite3
+wtforms
+gunicorn

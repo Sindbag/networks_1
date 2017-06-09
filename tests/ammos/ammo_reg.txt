@@ -1,0 +1,39 @@
+57 register_get
+GET /register HTTP/1.0
+Connection: close
+Host: 127.0.0.1
+
+
+162 register_post
+POST /register HTTP/1.0
+Connection: close
+Host: 127.0.0.1
+Content-Length: 35
+Content-Type: application/x-www-form-urlencoded
+
+username=abcdefgh&password=abcdefgh
+
+
+54 login_get
+GET /login HTTP/1.0
+Connection: close
+Host: 127.0.0.1
+
+
+212 login_post
+POST /login HTTP/1.0
+Connection: close
+Host: 127.0.0.1
+Content-Length: 35
+Content-Type: application/x-www-form-urlencoded
+Cookie: session=97b4b39c-19c6-4eda-bc38-a99a07af7e82
+
+username=abcdefgh&password=abcdefgh
+
+
+108 logout
+GET /logout HTTP/1.0
+Connection: close
+Host: 127.0.0.1
+Cookie: session=97b4b39c-19c6-4eda-bc38-a99a07af7e82
+

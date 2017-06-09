@@ -1,0 +1,16 @@
+web:
+  restart: always
+  build: ./
+  expose:
+    - "8000"
+  command: /usr/local/bin/gunicorn -w 8 -b :8000 app:app -t 60 -k flask_sockets.worker
+
+nginx:
+  restart: always
+  build: ./nginx/
+  ports:
+    - "80:80"
+  links:
+    - web:web
+  hostname: mywebhost
+  domainname: mywebhost.lan

@@ -1,0 +1,79 @@
+{% block userpage %}
+    <div class="row">
+        <div class="col"><h3>Hello, {{ user }}</h3><br><a href="/logout">Logout</a></div>
+    </div>
+    <div class="row">
+        <div class="col">{{ t }}</div>
+    </div>
+    <div class="row">
+        <div class="col">{{ task }}</div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <ol>
+                <li><a href="?task=easy">Fast function</a></li>
+                <li><a href="?task=calc">Calc function</a></li>
+                <li>
+                    <form class="form-inline" id="long-form" onsubmit="makeLong();">
+
+                      <label class="sr-only" for="inlineFormInput">Interval</label>
+                      <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" id="interval" placeholder="Interval">
+
+                      <label class="sr-only" for="inlineFormInput">Count</label>
+                      <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" id="count" placeholder="Count">
+
+                      <label class="sr-only" for="inlineFormInput">Time to live</label>
+                      <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" id="ttl" placeholder="Time to live">
+
+                      <button type="button" onclick="makeLong();" class="btn btn-primary">Slow function</button>
+                    </form>
+                </li>
+            </ol>
+            <div class="alert alert-success" id="pong"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function makeLong() {
+        var f = document.querySelector('#long-form');
+        if (!f.hidden) {
+            f.hidden = true;
+            getLongConn();
+        }
+    }
+
+    function getLongConn() {
+        var socket = new WebSocket("ws://" + document.location.host + "/hard");
+        socket.onclose = function(event) {
+          if (!event.wasClean) {
+            alert('Обрыв соединения'); // например, "убит" процесс сервера
+          }
+          var f = document.querySelector('#long-form');
+          f.hidden = false;
+        };
+        socket.onmessage = function(event) {
+          document.querySelector('#pong').innerHTML += '<p>' + event.data + '</p>';
+          if (event.data === 'close') {
+              socket.close();
+          }
+        };
+        socket.onerror = function(error) {
+          alert("Ошибка " + error.message);
+        };
+        socket.onopen = function() {
+            var c = document.querySelector('#count').value || 5,
+                i = document.querySelector('#interval').value || 1,
+                t = document.querySelector('#ttl').value || 100;
+            if (!(isNaN(c) && isNaN(t) && isNaN(i))) {
+                var data = {'c': c, 'i': i, 't': t};
+                document.querySelector('#pong').innerHTML = '';
+            } else {
+                document.querySelector('#pong').innerHTML = '<p>Bad input!</p>';
+            }
+            socket.send(JSON.stringify(data));
+        };
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,7 @@
+<Monitoring>
+<Host address="127.0.0.1" username="anatoly">
+<CPU measure="user,system,iowait"/>
+<Memory measure="free,used"/>
+<Custom measure="call">cat /proc/sys/fs/file-nr | awk '{print $1}'</Custom>
+</Host>
+</Monitoring>

@@ -1,0 +1,6 @@
+[Host: 127.0.0.1]
+[Connection: Keep-Alive]
+/static/file1.txt
+/static/file2.txt
+/static/file3.txt
+/static/file4.txt

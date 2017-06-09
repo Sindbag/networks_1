@@ -1,0 +1,6 @@
+114 hard_post
+POST /?task=hard HTTP/1.0
+Connection: close
+Host: 127.0.0.1
+Cookie: session=97b4b39c-19c6-4eda-bc38-a99a07af7e82
+

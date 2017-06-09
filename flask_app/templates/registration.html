@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "_renderfield.html" import render_field %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Registration page</h2>
+            <a href="/login">Go to Login Form</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form method=post class="form-group">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endif %}
+                <dl>
+                    {{ render_field(form.username) }}
+                    {{ render_field(form.email) }}
+                    {{ render_field(form.password) }}
+                    {{ render_field(form.confirm) }}
+                </dl>
+              <p><input type=submit value=Register>
+            </form>
+            <a href="/login">Login</a>
+        </div>
+    </div>
+{% endblock %}
